@@ -63,6 +63,7 @@ my_parser = argparse.ArgumentParser()  # Add the arguments so it can automatical
 
 text = ""
 
+# Adicionar -a e -f
 if ("-p" in sys.argv and "-c" in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv):
     n_processes = sys.argv[sys.argv.index("-p")+1]
     my_parser.add_argument(dest=text, metavar="text", type=str)
@@ -112,6 +113,8 @@ group = my_parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-c", action="store_true")          # empty argument
 group.add_argument("-l", action="store_true")          # empty argument
 my_parser.add_argument("-p")
+my_parser.add_argument("-a")
+my_parser.add_argument("-f")
 my_parser.add_argument(dest=text, metavar="text", type=str)
 
 args = my_parser.parse_args()                          # Execute the parse_args() method
