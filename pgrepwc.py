@@ -64,7 +64,28 @@ my_parser = argparse.ArgumentParser()  # Add the arguments so it can automatical
 text = ""
 
 # Adicionar -a e -f
-if ("-p" in sys.argv and "-c" in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv):
+if ("-p" in sys.argv and "-c" in sys.argv and "-a" in sys.argv and "-f" in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv and "-a" in sys.argv and "-f" in sys.argv):
+    n_processes = sys.argv[sys.argv.index("-p")+1]
+    my_parser.add_argument(dest=text, metavar="text", type=str)
+    
+    if not n_processes.isdigit():
+        raise("Number of processes must be an integer.")
+    else:
+        n_processes = int(n_processes)
+    start = 5
+    
+elif ("-p" not in sys.argv and "-c" in sys.argv and "-a" in sys.argv and "-f" in sys.argv) or ("-p" not in sys.argv and "-l" in sys.argv and "-a" in sys.argv and "-f" in sys.argv):
+    n_processes = 1
+    start = 3
+    my_parser.add_argument(dest=text, metavar="text", type=str)
+
+elif ("-p" not in sys.argv and "-c" not in sys.argv and "-a" in sys.argv and "-f" in sys.argv) or ("-p" not in sys.argv and "-l" not in sys.argv and "-a" in sys.argv and "-f" in sys.argv): # for argparse add_mutually_exclusive_group error \
+    start = 2                                                                                            # to work even when not -p -c and -l on command line
+
+elif ("-p" in sys.argv and "-c" not in sys.argv and "-a" in sys.argv and "-f" in sys.argv) or ("-p" in sys.argv and "-l" not in sys.argvand "-a" in sys.argv and "-f" in sys.argv):         # for argparse argparse add_mutually_exclusive_group error \
+    start = 4                                                                                            # to work even when not -c or -l on command line
+    
+elif("-p" in sys.argv and "-c" in sys.argv and "-a" not in sys.argv and "-f" in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv and "-a" not in sys.argv and "-f" in sys.argv):
     n_processes = sys.argv[sys.argv.index("-p")+1]
     my_parser.add_argument(dest=text, metavar="text", type=str)
     if not n_processes.isdigit():
@@ -72,16 +93,55 @@ if ("-p" in sys.argv and "-c" in sys.argv) or ("-p" in sys.argv and "-l" in sys.
     else:
         n_processes = int(n_processes)
     start = 5
-elif ("-p" not in sys.argv and "-c" in sys.argv) or ("-p" not in sys.argv and "-l" in sys.argv):
+elif ("-p" not in sys.argv and "-c" in sys.argv and "-a" not in sys.argv and "-f" in sys.argv) or ("-p" not in sys.argv and "-l" in sys.argv and "-a" not in sys.argv and "-f" in sys.argv):
     n_processes = 1
     start = 3
     my_parser.add_argument(dest=text, metavar="text", type=str)
 
-elif ("-p" not in sys.argv and "-c" not in sys.argv) or ("-p" not in sys.argv and "-l" not in sys.argv): # for argparse add_mutually_exclusive_group error \
+elif ("-p" not in sys.argv and "-c" not in sys.argv and "-a" not in sys.argv and "-f" in sys.argv) or ("-p" not in sys.argv and "-l" not in sys.argv and "-a" not in sys.argv and "-f" in sys.argv): # for argparse add_mutually_exclusive_group error \
+    start = 2                                                                                            # to work even when not -p -c -a and -l on command line
+
+elif ("-p" in sys.argv and "-c" not in sys.argv and "-a" not in sys.argv and "-f" in sys.argv) or ("-p" in sys.argv and "-l" not in sys.argvand "-a" not in sys.argv and "-f" in sys.argv):         # for argparse argparse add_mutually_exclusive_group error \
+    start = 4                                                                                            # to work even when not -c or -l on command line
+elif ("-p" in sys.argv and "-c" in sys.argv and "-a" in sys.argv and "-f" not in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv and "-a" in sys.argv and "-f" not in sys.argv):
+    n_processes = sys.argv[sys.argv.index("-p")+1]
+    my_parser.add_argument(dest=text, metavar="text", type=str)
+    
+    if not n_processes.isdigit():
+        raise("Number of processes must be an integer.")
+    else:
+        n_processes = int(n_processes)
+    start = 5
+    
+elif ("-p" not in sys.argv and "-c" in sys.argv and "-a" in sys.argv and "-f" not in sys.argv) or ("-p" not in sys.argv and "-l" in sys.argv and "-a" in sys.argv and "-f" not in sys.argv):
+    n_processes = 1
+    start = 3
+    my_parser.add_argument(dest=text, metavar="text", type=str)
+
+elif ("-p" not in sys.argv and "-c" not in sys.argv and "-a" in sys.argv and "-f" not in sys.argv) or ("-p" not in sys.argv and "-l" not in sys.argv and "-a" in sys.argv and "-f" not in sys.argv): # for argparse add_mutually_exclusive_group error \
     start = 2                                                                                            # to work even when not -p -c and -l on command line
 
-elif ("-p" in sys.argv and "-c" not in sys.argv) or ("-p" in sys.argv and "-l" not in sys.argv):         # for argparse argparse add_mutually_exclusive_group error \
+elif ("-p" in sys.argv and "-c" not in sys.argv and "-a" in sys.argv and "-f" not in sys.argv) or ("-p" in sys.argv and "-l" not in sys.argvand "-a" in sys.argv and "-f" not in sys.argv):         # for argparse argparse add_mutually_exclusive_group error \
     start = 4                                                                                            # to work even when not -c or -l on command line
+    
+elif("-p" in sys.argv and "-c" in sys.argv and "-a" not in sys.argv and "-f" not in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv and "-a" not in sys.argv and "-f" not in sys.argv):
+    n_processes = sys.argv[sys.argv.index("-p")+1]
+    my_parser.add_argument(dest=text, metavar="text", type=str)
+    if not n_processes.isdigit():
+        raise("Number of processes must be an integer.")
+    else:
+        n_processes = int(n_processes)
+    start = 5
+elif ("-p" not in sys.argv and "-c" in sys.argv and "-a" not in sys.argv and "-f" not in sys.argv) or ("-p" not in sys.argv and "-l" in sys.argv and "-a" not in sys.argv and "-f" not in sys.argv):
+    n_processes = 1
+    start = 3
+    my_parser.add_argument(dest=text, metavar="text", type=str)
+
+elif ("-p" not in sys.argv and "-c" not in sys.argv and "-a" not in sys.argv and "-f" not in sys.argv) or ("-p" not in sys.argv and "-l" not in sys.argv and "-a" not in sys.argv and "-f" not in sys.argv): # for argparse add_mutually_exclusive_group error \
+    start = 2                                                                                            # to work even when not -p -c -a and -l on command line
+
+elif ("-p" in sys.argv and "-c" not in sys.argv and "-a" not in sys.argv and "-f" not in sys.argv) or ("-p" in sys.argv and "-l" not in sys.argvand "-a" not in sys.argv and "-f" not in sys.argv):         # for argparse argparse add_mutually_exclusive_group error \
+    start = 4
 
 
 text = sys.argv[start]       # Index where files start to be given
