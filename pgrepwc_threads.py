@@ -63,22 +63,43 @@ my_parser = argparse.ArgumentParser()        # Add the arguments so it can autom
 
 text = ""
 
-if ("-p" in sys.argv and "-c" in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv):
-    n_processes = sys.argv[sys.argv.index("-p")+1]
-    my_parser.add_argument(dest=text, metavar="text", type=str)
-    if not n_processes.isdigit():
-        raise("Number of processes must be an integer.")
-    else:
-        n_processes = int(n_processes)
-    start = 5
-elif ("-p" not in sys.argv and "-c" in sys.argv) or ("-p" not in sys.argv and "-l" in sys.argv):
-    n_processes = 1
-    start = 3
-    my_parser.add_argument(dest=text, metavar="text", type=str)
-elif ("-p" not in sys.argv and "-c" not in sys.argv) or ("-p" not in sys.argv and "-l" not in sys.argv):  # for argparse add_mutually_exclusive_group error \
-    start = 2                                                                                             # to work even when not -p -c and -l on command line
-elif ("-p" in sys.argv and "-c" not in sys.argv) or ("-p" in sys.argv and "-l" not in sys.argv):          # for argparse add_mutually_exclusive_group error \
-    start = 4                                                                                             # to work even when not -c or -l on command line
+if ("-a" in sys.argv or "-f" in sys.argv):
+    if ("-p" in sys.argv and "-c" in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv):
+        n_processes = sys.argv[sys.argv.index("-p")+1]
+        my_parser.add_argument(dest=text, metavar="text", type=str)
+        if not n_processes.isdigit():
+            raise("Number of processes must be an integer.")
+        else:
+            n_processes = int(n_processes)
+        start = 5
+    elif ("-p" not in sys.argv and "-c" in sys.argv) or ("-p" not in sys.argv and "-l" in sys.argv):
+        n_processes = 1
+        start = 3
+        my_parser.add_argument(dest=text, metavar="text", type=str)
+    elif ("-p" not in sys.argv and "-c" not in sys.argv) or ("-p" not in sys.argv and "-l" not in sys.argv):  # for argparse add_mutually_exclusive_group error \
+        start = 2                                                                                             # to work even when not -p -c and -l on command line
+    elif ("-p" in sys.argv and "-c" not in sys.argv) or ("-p" in sys.argv and "-l" not in sys.argv):          # for argparse add_mutually_exclusive_group error \
+        start = 4                                                                                             # to work even when not -c or -l on command line
+        
+elif ("-a" not in sys.argv or "-f" not in sys.argv):
+    if ("-p" in sys.argv and "-c" in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv):
+        n_processes = sys.argv[sys.argv.index("-p")+1]
+        my_parser.add_argument(dest=text, metavar="text", type=str)
+        if not n_processes.isdigit():
+            raise("Number of processes must be an integer.")
+        else:
+            n_processes = int(n_processes)
+        start = 5
+    elif ("-p" not in sys.argv and "-c" in sys.argv) or ("-p" not in sys.argv and "-l" in sys.argv):
+        n_processes = 1
+        start = 3
+        my_parser.add_argument(dest=text, metavar="text", type=str)
+    elif ("-p" not in sys.argv and "-c" not in sys.argv) or ("-p" not in sys.argv and "-l" not in sys.argv):  # for argparse add_mutually_exclusive_group error \
+        start = 2                                                                                             # to work even when not -p -c and -l on command line
+    elif ("-p" in sys.argv and "-c" not in sys.argv) or ("-p" in sys.argv and "-l" not in sys.argv):          # for argparse add_mutually_exclusive_group error \
+        start = 4                                                                                             # to work even when not -c or -l on command line
+
+
 
 text = sys.argv[start]                # Index where text is
 files = sys.argv[start+1:]            # Index where files are given, right after the text index
