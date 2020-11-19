@@ -64,6 +64,8 @@ my_parser = argparse.ArgumentParser()        # Add the arguments so it can autom
 text = ""
 
 if ("-a" in sys.argv or "-f" in sys.argv):
+    time = sys.argv[sys.argv.index("-a")+1]   
+                    
     if ("-p" in sys.argv and "-c" in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv):
         n_processes = sys.argv[sys.argv.index("-p")+1]
         my_parser.add_argument(dest=text, metavar="text", type=str)
@@ -134,6 +136,17 @@ my_parser.add_argument("-f")
 my_parser.add_argument(dest=text, metavar="text", type=str)
 
 args = my_parser.parse_args()                      # Execute the parse_args() method
+
+###########################################################################################
+#ATENCAO: o programa só acaba quando estiver todos os files processados, como fazer isso? #
+def setInterval(func,time):                                                               #
+    e = threading.Event()                                                                 #
+    while not e.wait(time):                                                               #
+        func()                                                                            #
+                                                                                          #
+def stdout():                                                                             #
+    print ("-----")                                                                       #
+###########################################################################################
 
 threadPool = []
 for i in range(n_processes):                       # Create threads within range of n_processes, and start each thread with target function read_files

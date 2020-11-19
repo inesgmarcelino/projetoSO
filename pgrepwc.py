@@ -63,7 +63,6 @@ my_parser = argparse.ArgumentParser()  # Add the arguments so it can automatical
 
 text = ""
 
-# Adicionar -a e -f
 if ("-p" in sys.argv and "-c" in sys.argv and "-a" in sys.argv and "-f" in sys.argv) or ("-p" in sys.argv and "-l" in sys.argv and "-a" in sys.argv and "-f" in sys.argv):
     n_processes = sys.argv[sys.argv.index("-p")+1]
     my_parser.add_argument(dest=text, metavar="text", type=str)
