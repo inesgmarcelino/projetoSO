@@ -13,11 +13,10 @@ dicProc={}
 log_file = sys.argv[1]
 read_file =open(log_file, "rb")
 date = pickle.load(read_file)
-##print("Inicio da execucao da pesquisa: "+str(date))
+print("Inicio da execucao da pesquisa: "+str(date))
 control = True
 while control:
     try:
-        
         y = pickle.load(read_file)
         if type(y) != str :
             if y[0] not in dicProc:
