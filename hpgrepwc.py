@@ -13,18 +13,18 @@ dicProc={}
 log_file = sys.argv[1]
 read_file =open(log_file, "rb")
 date = pickle.load(read_file)
-print("Inicio da execucao da pesquisa: "+str(date))
+print("Inicio da execucao da pesquisa: "+str(date)) # gets de datetime
 control = True
 while control:
     try:
-        y = pickle.load(read_file)
+        y = pickle.load(read_file)   
         if type(y) != str :
-            if y[0] not in dicProc:
-                dicProc[y[0]] = [y[1:]]
+            if y[0] not in dicProc: #if os.getpid not in dicproc
+                dicProc[y[0]] = [y[1:]] #includes the os.getpid on the key, and then adds the items specific to that pid to dic
             else:
-                dicProc[y[0]].append(y[1:])
+                dicProc[y[0]].append(y[1:]) #appends the items for the specific pid on dic
         else:
-            print("Duracao da Execucao: "+str(y))
+            print("Duracao da Execucao: "+str(y))  # gets the time
     except:
         control=False
 
